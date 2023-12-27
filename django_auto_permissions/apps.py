@@ -5,7 +5,7 @@ from .viewset_analysis import analyze_registered_viewsets, register_viewset
 
 
 class AutoPermissionsConfig(AppConfig):
-    name = 'auto_permissions'
+    name = 'django_auto_permissions'
 
     def ready(self):
         # Example usage - this should ideally be done by the user of your library

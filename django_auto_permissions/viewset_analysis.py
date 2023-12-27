@@ -1,6 +1,3 @@
-# django_auto_permissions/auto_permissions/viewset_analysis.py
-
-
 def get_custom_methods(viewset_class):
     """
     Identifies custom methods in a given viewset class that are not part of the standard DRF viewsets.

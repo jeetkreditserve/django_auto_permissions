@@ -1,7 +1,7 @@
 # django_auto_permissions/auto_permissions/tests/test_viewset_analysis.py
 
 from django.test import TestCase
-from auto_permissions.viewset_analysis import get_custom_methods
+from django_auto_permissions.viewset_analysis import get_custom_methods
 
 class ViewsetAnalysisTests(TestCase):
 

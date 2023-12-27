@@ -1,1 +1,0 @@
-default_app_config = 'auto_permissions.apps.AutoPermissionsConfig'
