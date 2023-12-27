@@ -1,5 +1,3 @@
-# django_auto_permissions/auto_permissions/apps.py
-
 from django.apps import AppConfig
 
 from .permission_generation import register_permissions
@@ -7,7 +5,7 @@ from .viewset_analysis import analyze_registered_viewsets, register_viewset
 
 
 class AutoPermissionsConfig(AppConfig):
-    name = 'django_auto_permissions'
+    name = 'auto_permissions'
 
     def ready(self):
         # Example usage - this should ideally be done by the user of your library
