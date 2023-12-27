@@ -35,7 +35,9 @@ def register_viewset(viewset_class, model_class):
     :param viewset_class: The viewset class to register.
     :param model_class: The Django model class associated with the viewset.
     """
+    print("Registering viewset:", viewset_class, model_class)
     registered_viewsets_models.append((viewset_class, model_class))
+    print("Registered viewsets post registration:", registered_viewsets_models)
 
 
 def analyze_registered_viewsets():
@@ -45,6 +47,7 @@ def analyze_registered_viewsets():
     :return: Dictionary of viewset classes to their custom methods.
     """
     custom_methods_per_viewset = {}
+    print("Registered viewsets pre analysis:", registered_viewsets_models)
     for viewset_class, _ in registered_viewsets_models:
         custom_methods = get_custom_methods(viewset_class)
         custom_methods_per_viewset[viewset_class] = custom_methods
