@@ -2,10 +2,12 @@ from setuptools import setup, find_packages
 
 setup(
     name='django_auto_permissions',
-    version='0.1',
+    version='0.1.0',
     packages=find_packages(),
     include_package_data=True,
-    description='A Django library for automatic permission generation based on viewsets',
+    description='Automated permission generation for Django viewsets',
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     author='Jeet Padhya',
     author_email='jeet.padhya@hotmail.com',
     url='https://github.com/jeetkreditserve/django_auto_permissions',
