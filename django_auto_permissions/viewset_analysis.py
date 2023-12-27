@@ -6,7 +6,9 @@ def get_custom_methods(viewset_class):
     :return: A list of custom method names.
     """
     # Standard methods in DRF viewsets
-    standard_methods = {'list', 'create', 'retrieve', 'update', 'partial_update', 'destroy'}
+    standard_methods = {
+        # 'list', 'create', 'retrieve', 'update', 'partial_update', 'destroy'
+    }
 
     # Introspect viewset class and find custom methods
     custom_methods = []
