@@ -23,16 +23,17 @@ def get_custom_methods(viewset_class):
 # Existing imports and get_custom_methods function
 
 # New code for registration
-registered_viewsets = []
+registered_viewsets_models = []
 
 
-def register_viewset(viewset_class):
+def register_viewset(viewset_class, model_class):
     """
-    Registers a viewset class for permission analysis.
+    Registers a viewset class and its corresponding model class for permission analysis.
 
     :param viewset_class: The viewset class to register.
+    :param model_class: The Django model class associated with the viewset.
     """
-    registered_viewsets.append(viewset_class)
+    registered_viewsets_models.append((viewset_class, model_class))
 
 
 def analyze_registered_viewsets():
@@ -42,7 +43,7 @@ def analyze_registered_viewsets():
     :return: Dictionary of viewset classes to their custom methods.
     """
     custom_methods_per_viewset = {}
-    for viewset_class in registered_viewsets:
+    for viewset_class, _ in registered_viewsets_models:
         custom_methods = get_custom_methods(viewset_class)
         custom_methods_per_viewset[viewset_class] = custom_methods
     return custom_methods_per_viewset

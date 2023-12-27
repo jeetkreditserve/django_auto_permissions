@@ -1,4 +1,4 @@
-from .viewset_analysis import analyze_registered_viewsets
+from .viewset_analysis import get_custom_methods
 
 
 def generate_permission_codename(viewset_class, method_name):
@@ -18,18 +18,17 @@ def register_permissions():
         """
     from django.contrib.auth.models import Permission
     from django.contrib.contenttypes.models import ContentType
-    for viewset_class, methods in analyze_registered_viewsets().items():
-        for method in methods:
-            codename = generate_permission_codename(viewset_class, method)
-            name = f"Can {method} {viewset_class.__name__}"
+    for viewset_class, model_class in registered_viewsets_models:
+        content_type = ContentType.objects.get_for_model(model_class)
+        for method in get_custom_methods(viewset_class):
+            codename = f"{viewset_class.__name__.lower()}_{method}"
+            name = f"Can {method} {model_class.__name__}"
 
             # Creating and saving the permission
-            content_type = ContentType.objects.get_for_model(viewset_class)
             permission, created = Permission.objects.get_or_create(
                 codename=codename,
                 name=name,
                 content_type=content_type,
             )
-
             if created:
                 print(f"Created permission: {permission}")

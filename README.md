@@ -37,10 +37,11 @@ INSTALLED_APPS = [
 You need to register your custom viewsets with the library. Here's how to do it:
 
 ```python
-from auto_permissions.viewset_analysis import register_viewset
-from myapp.views import MyCustomViewSet
+from myapp.models import MyModel
+from myapp.views import MyViewSet
+from django_auto_permissions.viewset_analysis import register_viewset
 
-register_viewset(MyCustomViewSet)
+register_viewset(MyViewSet, MyModel)
 ```
 
 This should be done before running your Django project, ideally in a module that gets loaded on startup, such as `views.py` or `models.py`.
