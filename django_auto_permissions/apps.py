@@ -9,12 +9,10 @@ class AutoPermissionsConfig(AppConfig):
 
     def ready(self):
         # Example usage - this should ideally be done by the user of your library
-        class DummyViewSet:
-            def custom_method(self):
-                pass
 
-        register_viewset(DummyViewSet)
+        # Mock model class
         custom_methods = analyze_registered_viewsets()
         print("Custom Methods:", custom_methods)
+
         # Register generated permissions
         register_permissions()
