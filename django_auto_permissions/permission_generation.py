@@ -1,4 +1,4 @@
-from .viewset_analysis import get_custom_methods
+from .viewset_analysis import get_custom_methods, registered_viewsets_models
 
 
 def generate_permission_codename(viewset_class, method_name):
