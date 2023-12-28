@@ -10,14 +10,17 @@ class ViewsetRegistrar:
 
     @classmethod
     def get_custom_methods(cls, viewset):
-        standard_methods = {
-            # 'list', 'create', 'retrieve', 'update', 'partial_update', 'destroy'
-        }
+        standard_methods = {'list', 'create', 'retrieve', 'update', 'partial_update', 'destroy'}
+
+        # Get methods defined directly in the viewset class, not inherited
         custom_methods = []
         for attr_name in dir(viewset):
+            if attr_name in standard_methods:
+                continue  # Skip standard DRF methods
             attr = getattr(viewset, attr_name)
-            if callable(attr) and attr_name not in standard_methods:
+            if callable(attr) and attr.__qualname__.startswith(viewset.__name__ + '.'):
                 custom_methods.append(attr_name)
+
         return custom_methods
 
     @classmethod
