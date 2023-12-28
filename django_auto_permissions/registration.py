@@ -11,14 +11,17 @@ class ViewsetRegistrar:
     @classmethod
     def get_custom_methods(cls, viewset_class):
         from django.views import View
-        from rest_framework.viewsets import ViewSet
+        from rest_framework.viewsets import ViewSet, GenericViewSet
         standard_methods = {'list', 'create', 'retrieve', 'update', 'partial_update', 'destroy'}
         base_attributes = set(dir(type('dummy', (object,), {})))  # Python base object attributes
         view_attributes = set(dir(View))  # Attributes from Django's View
         viewset_attributes = set(dir(ViewSet))  # Attributes from DRF's ViewSet
+        generic_viewset_attributes = set(dir(GenericViewSet))  # Attributes from DRF's GenericViewSet
 
         # Combine all inherited attributes
-        inherited_attributes = base_attributes.union(view_attributes, viewset_attributes)
+        inherited_attributes = base_attributes.union(
+            view_attributes, viewset_attributes, generic_viewset_attributes
+        )
 
         custom_methods = []
         for attr_name in dir(viewset_class):
