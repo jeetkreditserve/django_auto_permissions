@@ -9,7 +9,7 @@ class ViewsetRegistrar:
         cls.register_permissions(viewset, model)
 
     @classmethod
-    def get_custom_methods(viewset_class):
+    def get_custom_methods(cls, viewset_class):
         from django.views import View
         from rest_framework.viewsets import ViewSet
         standard_methods = {'list', 'create', 'retrieve', 'update', 'partial_update', 'destroy'}
