@@ -9,16 +9,23 @@ class ViewsetRegistrar:
         cls.register_permissions(viewset, model)
 
     @classmethod
-    def get_custom_methods(cls, viewset):
+    def get_custom_methods(viewset_class):
+        from django.views import View
+        from rest_framework.viewsets import ViewSet
         standard_methods = {'list', 'create', 'retrieve', 'update', 'partial_update', 'destroy'}
+        base_attributes = set(dir(type('dummy', (object,), {})))  # Python base object attributes
+        view_attributes = set(dir(View))  # Attributes from Django's View
+        viewset_attributes = set(dir(ViewSet))  # Attributes from DRF's ViewSet
 
-        # Get methods defined directly in the viewset class, not inherited
+        # Combine all inherited attributes
+        inherited_attributes = base_attributes.union(view_attributes, viewset_attributes)
+
         custom_methods = []
-        for attr_name in dir(viewset):
-            if attr_name in standard_methods:
-                continue  # Skip standard DRF methods
-            attr = getattr(viewset, attr_name)
-            if callable(attr) and attr.__qualname__.startswith(viewset.__name__ + '.'):
+        for attr_name in dir(viewset_class):
+            if attr_name in standard_methods or attr_name in inherited_attributes:
+                continue
+            attr = getattr(viewset_class, attr_name)
+            if callable(attr) and attr.__qualname__.startswith(viewset_class.__name__ + '.'):
                 custom_methods.append(attr_name)
 
         return custom_methods
