@@ -3,12 +3,16 @@ class ViewsetRegistrar:
 
     @classmethod
     def register(cls, viewset, model):
+        print("Registering viewset:", viewset, model)
         cls.registered_viewsets.append((viewset, model))
+        print("Registered viewsets post registration:", cls.registered_viewsets)
         cls.register_permissions(viewset, model)
 
     @classmethod
     def get_custom_methods(cls, viewset):
-        standard_methods = {'list', 'create', 'retrieve', 'update', 'partial_update', 'destroy'}
+        standard_methods = {
+            # 'list', 'create', 'retrieve', 'update', 'partial_update', 'destroy'
+        }
         custom_methods = []
         for attr_name in dir(viewset):
             attr = getattr(viewset, attr_name)
@@ -20,16 +24,17 @@ class ViewsetRegistrar:
     def register_permissions(cls, viewset, model):
         from django.contrib.auth.models import Permission
         from django.contrib.contenttypes.models import ContentType
-
+        print("Registering permissions for:", viewset, model)
         content_type = ContentType.objects.get_for_model(model)
         custom_methods = cls.get_custom_methods(viewset)
-
+        print("Custom methods:", custom_methods)
         for method in custom_methods:
             codename = f"{model._meta.model_name}_{method}"
             name = f"Can {method} {model._meta.verbose_name}"
             Permission.objects.get_or_create(
                 codename=codename, name=name, content_type=content_type
             )
+            print(f"Registered permission: {codename}")
 
     @classmethod
     def process_registrations(cls):
