@@ -37,6 +37,7 @@ class ViewsetRegistrar:
     def register_permissions(cls, viewset, model):
         from django.contrib.auth.models import Permission
         from django.contrib.contenttypes.models import ContentType
+        from .permissions import create_permission_classes_for_viewset
         print("Registering permissions for:", viewset, model)
         content_type = ContentType.objects.get_for_model(model)
         custom_methods = cls.get_custom_methods(viewset)
@@ -48,6 +49,8 @@ class ViewsetRegistrar:
                 codename=codename, name=name, content_type=content_type
             )
             print(f"Registered permission: {codename}")
+        # Create dynamic permission classes and add them to the module
+        create_permission_classes_for_viewset(viewset, custom_methods)
 
     @classmethod
     def process_registrations(cls):
