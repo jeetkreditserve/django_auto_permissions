@@ -1,14 +1,12 @@
 import sys
-
 from rest_framework.permissions import BasePermission
 
-
-def create_permission_classes_for_viewset(viewset, custom_methods):
-    viewset_name = viewset.__name__
+def create_permission_classes_for_model(model, custom_methods):
+    model_name = model._meta.model_name.capitalize()
 
     for method in custom_methods:
-        # Define class name
-        class_name = f"{viewset_name}{method.capitalize()}Permission"
+        # Define class name based on the model and method
+        class_name = f"{model_name}{method.capitalize()}Permission"
 
         # Define the permission class dynamically
         new_permission_class = type(
